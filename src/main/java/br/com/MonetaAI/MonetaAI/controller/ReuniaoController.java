@@ -19,7 +19,7 @@ public class ReuniaoController {
 
     @GetMapping("/reunioes")
     public List<ReuniaoDto> getTodasReunioes(){
-        return reuniaoService.getTodasReunioes();
+        return reuniaoService.getTodasReuniao();
     }
 
 
