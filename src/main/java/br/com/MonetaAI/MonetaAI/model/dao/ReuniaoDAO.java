@@ -22,19 +22,19 @@ public class ReuniaoDAO {
 
     public String inserir(ReuniaoDto reuniao){
 
-        String sql = "insert into REUNIAO(DATA, TRANSCRICAO, ID_CLIENTE) values(?, ?, ?)";
+        String sql = "insert into REUNIAO(DATA, TRANSCRICAO) values(?, ?)";
         try(PreparedStatement ps = getCon().prepareStatement(sql, new String[]{"ID_REUNIAO"})) {
             ps.setDate(1, Date.valueOf(reuniao.getData()));
             ps.setString(2, reuniao.getTranscricao());
-            ps.setInt(3, reuniao.getCliente().getIdCliente());
+
             if (ps.executeUpdate() > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
-                        reuniao.setIdReuniao(rs.getInt(1));
+                        reuniao.setId_reuniao(rs.getInt(1));
                     }
                 }
                 ConnectionFactory.fecharConexao(getCon());
-                return "Reunião inserida com sucesso! ID: " + reuniao.getIdReuniao();
+                return "Reunião inserida com sucesso! ID: " + reuniao.getId_reuniao();
             }
             ConnectionFactory.fecharConexao(getCon());
             return "Não foi possível inserir a reunião.";
