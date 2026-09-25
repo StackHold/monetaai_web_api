@@ -10,13 +10,19 @@ public class ReuniaoDAO {
 
     private Connection con;
 
-    public ReuniaoDAO(Connection con){this.con = con;}
+    public ReuniaoDAO(){
+        setCon(ConnectionFactory.abrirConexao());
+    }
 
     public Connection getCon() {
         return con;
     }
+    public void setCon(Connection con) {
+         this.con = con;
+    }
 
     public String inserir(ReuniaoDto reuniao){
+
         String sql = "insert into REUNIAO(DATA, TRANSCRICAO, ID_CLIENTE) values(?, ?, ?)";
         try(PreparedStatement ps = getCon().prepareStatement(sql, new String[]{"ID_REUNIAO"})) {
             ps.setDate(1, Date.valueOf(reuniao.getData()));
@@ -28,10 +34,13 @@ public class ReuniaoDAO {
                         reuniao.setIdReuniao(rs.getInt(1));
                     }
                 }
+                ConnectionFactory.fecharConexao(getCon());
                 return "Reunião inserida com sucesso! ID: " + reuniao.getIdReuniao();
             }
+            ConnectionFactory.fecharConexao(getCon());
             return "Não foi possível inserir a reunião.";
         } catch (SQLException e) {
+            ConnectionFactory.fecharConexao(getCon());
             return "ERRO: erro de SQL " + e.getMessage();
         }
     }
@@ -44,11 +53,14 @@ public class ReuniaoDAO {
             ps.setInt(3, reuniao.getCliente().getIdCliente());
             ps.setInt(4, reuniao.getIdReuniao());
             if (ps.executeUpdate() > 0) {
+                ConnectionFactory.fecharConexao(getCon());
                 return "Reunião foi atualizada com sucesso!";
             } else {
+                ConnectionFactory.fecharConexao(getCon());
                 return "Não foi possivel atualizar a reunião, id não encontrado";
             }
         } catch (SQLException e) {
+            ConnectionFactory.fecharConexao(getCon());
             return "ERRO: erro de SQL" + e.getMessage();
         }
     }
@@ -58,11 +70,14 @@ public class ReuniaoDAO {
         try(PreparedStatement ps = getCon().prepareStatement(sql)) {
             ps.setInt(1, idReuniao);
             if (ps.executeUpdate() > 0) {
+                ConnectionFactory.fecharConexao(getCon());
                 return "A reunião foi excluida com sucesso!";
             } else {
+                ConnectionFactory.fecharConexao(getCon());
                 return "Não foi possivel excluir a reunião!";
             }
         } catch (SQLException e) {
+            ConnectionFactory.fecharConexao(getCon());
             return "ERRO: erro de SQL" + e.getMessage();
         }
     }
@@ -82,6 +97,7 @@ public class ReuniaoDAO {
         } catch (SQLException e) {
             System.out.println("ERRO: erro de SQL ao listar a reunião" + e.getMessage());
         }
+        ConnectionFactory.fecharConexao(getCon());
         return listaReuniao;
     }
 
@@ -103,6 +119,7 @@ public class ReuniaoDAO {
         } catch (SQLException e) {
             System.out.println("ERRO: erro de SQL ao buscar o ID da reunião" + e.getMessage());
         }
+        ConnectionFactory.fecharConexao(getCon());
         return reuniao;
     }
 }
