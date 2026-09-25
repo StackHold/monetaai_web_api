@@ -2,27 +2,29 @@ package br.com.MonetaAI.MonetaAI.controller;
 
 import br.com.MonetaAI.MonetaAI.model.dao.ReuniaoDAO;
 import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
 public class ReuniaoController {
-    //TODO rota get listar todos
 
-    private final ReuniaoDAO reuniaoDAO;
+    private final ReuniaoService reuniaoService;
 
-    ReuniaoController(ReuniaoDAO reuniaoDAO){
-        this.reuniaoDAO = reuniaoDAO;
+    ReuniaoController(ReuniaoService reuniaoService){
+        this.reuniaoService = reuniaoService;
     }
 
 
     @GetMapping("/reunioes")
     public List<ReuniaoDto> getTodasReunioes(){
-        return reuniaoDAO.getTodasReunioes();
+        return reuniaoService.getTodasReunioes();
     }
 
 
-    //TODO rota post cadastrar nova reuniao
+    @PostMapping("/nova-reuniao")
+    public ReuniaoDto createReuniao(@RequestBody ReuniaoDto reuniao){
+        return reuniaoService.createReuniao(reuniao);
+    }
 }
