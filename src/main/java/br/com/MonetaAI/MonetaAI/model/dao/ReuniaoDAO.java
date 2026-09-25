@@ -6,8 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ReuniaoDAO {
-
-
     private Connection con;
 
     public ReuniaoDAO(){
@@ -45,25 +43,7 @@ public class ReuniaoDAO {
         }
     }
 
-    public String atualizar(ReuniaoDto reuniao){
-        String sql = "update REUNIAO set DATA = ?, TRANSCRICAO = ?, ID_CLIENTE = ? WHERE ID_REUNIAO = ?";
-        try(PreparedStatement ps = getCon().prepareStatement(sql)) {
-            ps.setDate(1, Date.valueOf(reuniao.getData()));
-            ps.setString(2, reuniao.getTranscricao());
-            ps.setInt(3, reuniao.getCliente().getIdCliente());
-            ps.setInt(4, reuniao.getIdReuniao());
-            if (ps.executeUpdate() > 0) {
-                ConnectionFactory.fecharConexao(getCon());
-                return "Reunião foi atualizada com sucesso!";
-            } else {
-                ConnectionFactory.fecharConexao(getCon());
-                return "Não foi possivel atualizar a reunião, id não encontrado";
-            }
-        } catch (SQLException e) {
-            ConnectionFactory.fecharConexao(getCon());
-            return "ERRO: erro de SQL" + e.getMessage();
-        }
-    }
+
 
     public String excluir(int idReuniao){
         String sql = "delete from REUNIAO where ID_REUNIAO = ?";
@@ -101,25 +81,5 @@ public class ReuniaoDAO {
         return listaReuniao;
     }
 
-    public ReuniaoDto buscarPorId(int idReuniao){
-        String sql = "select ID_REUNIAO, DATA, TRANSCRICAO, ID_CLIENTE from REUNIAO where ID_REUNIAO = ?";
-        Reuniao reuniao = null;
-        try(PreparedStatement ps = getCon().prepareStatement(sql)) {
-            ps.setInt(1, idReuniao);
-            try(ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    Cliente cliente = new ClienteDAO(getCon()).buscarPorId(rs.getInt("ID_CLIENTE"));
-                    reuniao = new Reuniao();
-                    reuniao.setIdReuniao(rs.getInt("ID_REUNIAO"));
-                    reuniao.setData(rs.getDate("DATA").toLocalDate());
-                    reuniao.setTranscricao(rs.getString("TRANSCRICAO"));
-                    reuniao.setCliente(cliente);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("ERRO: erro de SQL ao buscar o ID da reunião" + e.getMessage());
-        }
-        ConnectionFactory.fecharConexao(getCon());
-        return reuniao;
-    }
+
 }
