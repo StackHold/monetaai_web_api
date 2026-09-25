@@ -19,4 +19,10 @@ public class ReuniaoService {
         return reuniaoDAO.listarTodos();
     }
 
+    public String postReuniao(ReuniaoDto reuniao){
+        return reuniaoDAO.inserir(reuniao);
+    }
+
+
+
 }
