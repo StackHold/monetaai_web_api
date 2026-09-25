@@ -19,8 +19,12 @@ public class ReuniaoService {
         return reuniaoDAO.listarTodos();
     }
 
-    public String postReuniao(ReuniaoDto reuniao){
-        return reuniaoDAO.inserir(reuniao);
+    public String postReuniao(ReuniaoDto reuniaoDto){
+        return reuniaoDAO.inserir(reuniaoDto);
+    }
+
+    public String deleteReuniao(ReuniaoDto reuniaoDto){
+        return reuniaoDAO.excluir(reuniaoDto.getId_reuniao());
     }
 
 
