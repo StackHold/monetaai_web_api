@@ -11,6 +11,12 @@ public class ReuniaoDto {
 
     public ReuniaoDto() {}
 
+    public ReuniaoDto(int id_reuniao, LocalDate data, String transcricao) {
+        this.id_reuniao = id_reuniao;
+        this.data = data;
+        this.transcricao = transcricao;
+    }
+
     public int getId_reuniao() {
         return id_reuniao;
     }
