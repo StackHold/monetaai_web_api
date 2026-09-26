@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class ReuniaoDAO {
     private Connection con;
 
-    public ReuniaoDAO(){
-        setCon(ConnectionFactory.abrirConexao());
+    public ReuniaoDAO(Connection con){
+        setCon(con);
     }
 
     public Connection getCon() {
@@ -21,7 +21,7 @@ public class ReuniaoDAO {
 
     public String inserir(ReuniaoDto reuniao){
 
-        String sql = "insert into REUNIAO(DATA, TRANSCRICAO) values(?, ?)";
+        String sql = "insert into REUNIAO_TESTE(DATA, TRANSCRICAO) values(?, ?)";
         try(PreparedStatement ps = getCon().prepareStatement(sql, new String[]{"ID_REUNIAO"})) {
             ps.setDate(1, Date.valueOf(reuniao.getData()));
             ps.setString(2, reuniao.getTranscricao());
@@ -63,7 +63,7 @@ public class ReuniaoDAO {
     }
 
     public ArrayList<ReuniaoDto> listarTodos(){
-        String sql = "select * from REUNIAO order by ID_REUNIAO";
+        String sql = "select * from REUNIAO_TESTE order by ID_REUNIAO";
         ArrayList<ReuniaoDto> listaReuniao = new ArrayList<>();
         try(PreparedStatement ps = getCon().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while(rs.next()){
@@ -77,7 +77,7 @@ public class ReuniaoDAO {
         } catch (SQLException e) {
             System.out.println("ERRO: erro de SQL ao listar a reunião" + e.getMessage());
         }
-        ConnectionFactory.fecharConexao(getCon());
+
         return listaReuniao;
     }
 
