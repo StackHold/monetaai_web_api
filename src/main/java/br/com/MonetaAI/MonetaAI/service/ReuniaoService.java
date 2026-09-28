@@ -22,7 +22,15 @@ public class ReuniaoService {
     public String postReuniao(ReuniaoDto reuniao){
         Connection con = ConnectionFactory.abrirConexao();
         ReuniaoDAO reuniaoDAO = new ReuniaoDAO(con);
+        ConnectionFactory.fecharConexao(con);
         return reuniaoDAO.inserir(reuniao);
+    }
+
+    public String deleteReuniao(ReuniaoDto reuniao){
+        Connection con = ConnectionFactory.abrirConexao();
+        ReuniaoDAO reuniaoDAO = new ReuniaoDAO(con);
+        ConnectionFactory.fecharConexao(con);
+        return reuniaoDAO.excluir(reuniao.getId_reuniao());
     }
 
 }
