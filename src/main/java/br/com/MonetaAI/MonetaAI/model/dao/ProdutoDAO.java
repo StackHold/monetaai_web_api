@@ -1,12 +1,11 @@
 package br.com.MonetaAI.MonetaAI.model.dao;
 
+import br.com.MonetaAI.MonetaAI.model.dto.ProdutoDto;
+import br.com.MonetaAI.MonetaAI.model.dto.ProdutoNovoDto;
 import br.com.MonetaAI.MonetaAI.model.dto.ProdutoPortDto;
 import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +32,38 @@ public class ProdutoDAO {
                 listaProdutos.add(produto);
             }
         }catch (SQLException e){
-            System.out.println("ERRO: erro de SQL ao listar a reunião" + e.getMessage());
+            System.out.println("ERRO: erro de SQL ao listar os produtos" + e.getMessage());
         }
         return listaProdutos;
+    }
+
+    public ProdutoDto criar(ProdutoNovoDto produto){
+        String sql = "INSERT INTO PRODUTO_TOTVS(nome, preco) values (?,?)";
+        try(PreparedStatement ps = getCon().prepareStatement(sql, new String[]{"id_produto"})){
+            ps.setString(1, produto.getNome());
+            ps.setFloat(2, produto.getPreco());
+
+            if (ps.executeUpdate() > 0) {
+                String queryResultado = "SELECT id_produto from PRODUTO_TOTVS where nome = ?";
+                try(PreparedStatement ps2 = getCon().prepareStatement(sql)){
+                        ps2.setString(1, produto.getNome());
+                        ResultSet rs2 = ps2.executeQuery();
+                   if(rs2.next()) {
+                       ProdutoDto produtoResult = new ProdutoDto();
+                       produtoResult.setId_produto(rs2.getInt(1));
+                       produtoResult.setNome(produto.getNome());
+                       produtoResult.setPreco(produto.getPreco());
+                       return produtoResult;
+                   }
+
+                }catch (SQLException e){
+                    System.out.println("ERRO: erro de SQL ao listar os produtos" + e.getMessage());
+                }
+            }
+            //TODO Caso o comando não dê certo, retorne um erro
+            return Exception;
+        }catch (SQLException e){
+            System.out.println("ERRO: erro de SQL ao criar novo produto" + e.getMessage());
+        }
     }
 }
