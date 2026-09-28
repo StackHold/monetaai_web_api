@@ -34,7 +34,6 @@ public class ReuniaoDAO {
     }
 
 
-
     public String excluir(int idReuniao){
         String sql = "delete from REUNIAO where ID_REUNIAO = ?";
         try(PreparedStatement ps = getCon().prepareStatement(sql)) {
