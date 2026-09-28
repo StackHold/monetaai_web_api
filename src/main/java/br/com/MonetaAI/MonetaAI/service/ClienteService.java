@@ -3,6 +3,7 @@ package br.com.MonetaAI.MonetaAI.service;
 import br.com.MonetaAI.MonetaAI.model.dao.ClienteDAO;
 import br.com.MonetaAI.MonetaAI.model.dao.ConnectionFactory;
 import br.com.MonetaAI.MonetaAI.model.dto.ClienteDto;
+import br.com.MonetaAI.MonetaAI.model.dto.ClienteRgcDto;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -35,10 +36,10 @@ public class ClienteService {
         return clienteDao.excluir(clienteDto);
     }
 
-    public List<ClienteDto> getTodosClientes(){
+    public List<ClienteRgcDto> getTodosClientes(){
         Connection con = ConnectionFactory.abrirConexao();
         ClienteDAO clienteDao = new ClienteDAO(con);
-        List<ClienteDto> result = clienteDao.listarTodos();
+        List<ClienteRgcDto> result = clienteDao.listarTodos();
         ConnectionFactory.fecharConexao(con);
         return result;
     }

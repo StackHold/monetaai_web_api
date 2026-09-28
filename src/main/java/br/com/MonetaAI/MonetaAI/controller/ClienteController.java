@@ -1,6 +1,7 @@
 package br.com.MonetaAI.MonetaAI.controller;
 
 import br.com.MonetaAI.MonetaAI.model.dto.ClienteDto;
+import br.com.MonetaAI.MonetaAI.model.dto.ClienteRgcDto;
 import br.com.MonetaAI.MonetaAI.service.ClienteService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class ClienteController {
     }
 
     @GetMapping("/clientes")
-    public List<ClienteDto> getTodosClientes(){
+    public List<ClienteRgcDto> getTodosClientes(){
         return clienteService.getTodosClientes();
     }
 

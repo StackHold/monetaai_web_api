@@ -1,6 +1,7 @@
 package br.com.MonetaAI.MonetaAI.model.dao;
 
 import br.com.MonetaAI.MonetaAI.model.dto.ClienteDto;
+import br.com.MonetaAI.MonetaAI.model.dto.ClienteRgcDto;
 import br.com.MonetaAI.MonetaAI.model.dto.FuncionarioDto;
 import oracle.jdbc.proxy.annotation.Pre;
 
@@ -69,18 +70,23 @@ public class ClienteDAO {
         }
     }
 
-    public ArrayList<ClienteDto> listarTodos(){
-        String sql = "select * from CLIENTE order by ID_CLIENTE";
-        ArrayList<ClienteDto> listaCliente = new ArrayList<>();
+    public ArrayList<ClienteRgcDto> listarTodos(){
+        String sql = "SELECT  C.NOME, C.CNPJ, C.SEGMENTO, C.EMAIL, RGC.PONTUACAO\n" +
+                "FROM CLIENTE C\n" +
+                "INNER JOIN REUNIAO R ON C.ID_CLIENTE = R.ID_CLIENTE\n" +
+                "INNER JOIN RESULTADO_ANALISE ra ON R.ID_REUNIAO  = ra.ID_REUNIAO \n" +
+                "INNER JOIN RGC ON ra.ID_RGC = RGC.ID_RGC \n" +
+                "ORDER BY RGC.PONTUACAO DESC";
+        ArrayList<ClienteRgcDto> listaCliente = new ArrayList<>();
         try(PreparedStatement ps = getcon().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while(rs.next()){
-                ClienteDto clienteDto = new ClienteDto();
-                clienteDto.setId_cliente(rs.getInt(1));
-                clienteDto.setCnpj(rs.getString(2));
-                clienteDto.setSegmento(rs.getString(3));
-                clienteDto.setNome(rs.getString(4));
-                clienteDto.setEmail(rs.getString(5));
-                listaCliente.add(clienteDto);
+                ClienteRgcDto clienteRgcDto = new ClienteRgcDto();
+                clienteRgcDto.setNome(rs.getString(1));
+                clienteRgcDto.setCnpj(rs.getString(2));
+                clienteRgcDto.setSegmento(rs.getString(3));
+                clienteRgcDto.setEmail(rs.getString(4));
+                clienteRgcDto.setPontuacao(rs.getInt(5));
+                listaCliente.add(clienteRgcDto);
             }
         } catch (SQLException e) {
             System.out.println("ERRO: erro de SQL ao listar a reunião" + e.getMessage());

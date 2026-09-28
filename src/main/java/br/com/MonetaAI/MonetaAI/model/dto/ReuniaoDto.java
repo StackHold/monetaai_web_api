@@ -8,13 +8,15 @@ public class ReuniaoDto {
     private int id_reuniao;
     private LocalDate data;
     private String transcricao;
+    private ClienteDto clienteDto;
 
     public ReuniaoDto() {}
 
-    public ReuniaoDto(int id_reuniao, LocalDate data, String transcricao) {
+    public ReuniaoDto(int id_reuniao, LocalDate data, String transcricao, ClienteDto clienteDto) {
         this.id_reuniao = id_reuniao;
         this.data = data;
         this.transcricao = transcricao;
+        this.clienteDto = clienteDto;
     }
 
     public int getId_reuniao() {
@@ -34,5 +36,11 @@ public class ReuniaoDto {
     }
     public void setTranscricao(String transcricao) {
         this.transcricao = transcricao;
+    }
+    public ClienteDto getClienteDto() {
+        return clienteDto;
+    }
+    public void setClienteDto(ClienteDto clienteDto) {
+        this.clienteDto = clienteDto;
     }
 }

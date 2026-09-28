@@ -20,3 +20,4 @@ public class ProdutoController {
         return produtoService.getAllProdutos();
     }
 }
+
