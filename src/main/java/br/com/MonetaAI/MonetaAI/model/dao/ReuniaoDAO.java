@@ -28,12 +28,7 @@ public class ReuniaoDAO {
             ps.setString(2, reuniao.getTranscricao());
 
             if (ps.executeUpdate() > 0) {
-                try (ResultSet rs = ps.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        reuniao.setId_reuniao(rs.getInt(1));
-                    }
-                }
-                return "Reunião inserida com sucesso! ID: " + reuniao.getId_reuniao();
+                return "Deu certo";
             }
             return "Não foi possível inserir a reunião.";
         } catch (SQLException e) {

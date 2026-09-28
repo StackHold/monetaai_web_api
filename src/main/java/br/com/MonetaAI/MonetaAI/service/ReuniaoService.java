@@ -23,8 +23,9 @@ public class ReuniaoService {
     public String postReuniao(ReuniaoNovaDto reuniao){
         Connection con = ConnectionFactory.abrirConexao();
         ReuniaoDAO reuniaoDAO = new ReuniaoDAO(con);
+        String resultado = reuniaoDAO.inserir(reuniao);
         ConnectionFactory.fecharConexao(con);
-        return reuniaoDAO.inserir(reuniao);
+        return resultado;
     }
 
     public String deleteReuniao(ReuniaoDto reuniao){
