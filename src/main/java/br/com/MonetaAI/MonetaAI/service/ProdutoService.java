@@ -24,6 +24,7 @@ public class ProdutoService {
     }
 
     public ProdutoDto createNovoProduto(ProdutoNovoDto produto){
+        //TODO validar se o produto já existe na base de dados
         Connection con = ConnectionFactory.abrirConexao();
         ProdutoDAO produtoDAO = new ProdutoDAO(con);
         ProdutoDto resultado = produtoDAO.criar(produto);
