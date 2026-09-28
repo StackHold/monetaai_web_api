@@ -1,6 +1,7 @@
 package br.com.MonetaAI.MonetaAI.controller;
 
 import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoDto;
+import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoNovaDto;
 import br.com.MonetaAI.MonetaAI.service.ReuniaoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class ReuniaoController {
 
 
     @PostMapping("/nova-reuniao")
-    public String createReuniao(@RequestBody ReuniaoDto reuniao){
+    public String createReuniao(@RequestBody ReuniaoNovaDto reuniao){
         return reuniaoService.postReuniao(reuniao);
     }
 

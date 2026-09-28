@@ -3,6 +3,7 @@ package br.com.MonetaAI.MonetaAI.service;
 import br.com.MonetaAI.MonetaAI.model.dao.ConnectionFactory;
 import br.com.MonetaAI.MonetaAI.model.dao.ReuniaoDAO;
 import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoDto;
+import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoNovaDto;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -19,11 +20,12 @@ public class ReuniaoService {
         return result;
     }
 
-    public String postReuniao(ReuniaoDto reuniao){
+    public String postReuniao(ReuniaoNovaDto reuniao){
         Connection con = ConnectionFactory.abrirConexao();
         ReuniaoDAO reuniaoDAO = new ReuniaoDAO(con);
+        String resultado = reuniaoDAO.inserir(reuniao);
         ConnectionFactory.fecharConexao(con);
-        return reuniaoDAO.inserir(reuniao);
+        return resultado;
     }
 
     public String deleteReuniao(ReuniaoDto reuniao){

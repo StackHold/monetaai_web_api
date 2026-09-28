@@ -1,6 +1,7 @@
 package br.com.MonetaAI.MonetaAI.model.dao;
 
 import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoDto;
+import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoNovaDto;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,13 +20,15 @@ public class ReuniaoDAO {
          this.con = con;
     }
 
-    public String inserir(ReuniaoDto reuniao){
+    public String inserir(ReuniaoNovaDto reuniao){
+
         String sql = "insert into REUNIAO_TESTE(DATA, TRANSCRICAO) values(?, ?)";
         try(PreparedStatement ps = getCon().prepareStatement(sql, new String[]{"ID_REUNIAO"})) {
             ps.setDate(1, Date.valueOf(reuniao.getData()));
             ps.setString(2, reuniao.getTranscricao());
+
             if (ps.executeUpdate() > 0) {
-                return "Reunião inserida com sucesso! ID: " + reuniao.getId_reuniao();
+                return "Deu certo";
             }
             return "Não foi possível inserir a reunião.";
         } catch (SQLException e) {
@@ -64,6 +67,7 @@ public class ReuniaoDAO {
         } catch (SQLException e) {
             System.out.println("ERRO: erro de SQL ao listar a reunião" + e.getMessage());
         }
+
         return listaReuniao;
     }
 
