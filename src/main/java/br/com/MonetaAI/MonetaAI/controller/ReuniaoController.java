@@ -29,7 +29,7 @@ public class ReuniaoController {
         return reuniaoService.postReuniao(reuniao);
     }
 
-    @DeleteMapping("/Excluindo-Reunião")
+    @DeleteMapping("/excluindo-reuniao")
     public String deleteReuniao(@RequestBody ReuniaoDto reuniao){
         return reuniaoService.deleteReuniao(reuniao);
     }
