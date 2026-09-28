@@ -1,12 +1,12 @@
 package br.com.MonetaAI.MonetaAI.model.dao;
 
 import br.com.MonetaAI.MonetaAI.model.dto.FuncionarioDto;
+import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoDto;
 import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoNovaDto;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FuncionarioDAO {
     private Connection con;
@@ -19,19 +19,27 @@ public class FuncionarioDAO {
         return con;
     }
 
-    public String inserir(FuncionarioDto funcionarioDto){
-        String sql = "insert into () values()";
-        try(PreparedStatement ps = getCon().prepareStatement(sql, new String[]{"ID_REUNIAO"})) {
-            ps.setDate(1, Date.valueOf(.getData()));
-            ps.setString(2, .getTranscricao());
+    public ArrayList<FuncionarioDto> listarTodos(){
+        String sql = "select * from FUNCIONARIO order by ID_FUNCIONARIO";
+        ArrayList<FuncionarioDto> listaFuncionario = new ArrayList<>();
+        try(PreparedStatement ps = getCon().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while(rs.next()){
+                FuncionarioDto funcionarioDto = new FuncionarioDto();
+                funcionarioDto.setId_funcionario(rs.getInt(1));
+                funcionarioDto.setCpf(rs.getString(2));
+                funcionarioDto.setSenha(rs.getString(3));
+                funcionarioDto.setNome(rs.getString(4));
+                funcionarioDto.setEmail(rs.getString(5));
 
-            if (ps.executeUpdate() > 0) {
-                return "Deu certo";
+                listaFuncionario.add(funcionarioDto);
             }
-            return "Não foi possível inserir a reunião.";
         } catch (SQLException e) {
-            return "ERRO: erro de SQL " + e.getMessage();
+            System.out.println("ERRO: erro de SQL ao listar a reunião" + e.getMessage());
         }
+
+        return listaFuncionario;
     }
+
+
 
 }
