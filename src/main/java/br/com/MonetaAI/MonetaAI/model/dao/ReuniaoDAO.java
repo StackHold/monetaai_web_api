@@ -63,14 +63,14 @@ public class ReuniaoDAO {
     }
 
     public ArrayList<ReuniaoDto> listarTodos(){
-        String sql = "select * from REUNIAO_TESTE order by ID_REUNIAO";
+        String sql = "select * from reuniao_teste order by ID_REUNIAO";
         ArrayList<ReuniaoDto> listaReuniao = new ArrayList<>();
         try(PreparedStatement ps = getCon().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while(rs.next()){
                 ReuniaoDto reuniao = new ReuniaoDto();
-                reuniao.setId_reuniao(rs.getInt("ID_REUNIAO"));
-                reuniao.setData(rs.getDate("DATA").toLocalDate());
-                reuniao.setTranscricao(rs.getString("TRANSCRICAO"));
+                reuniao.setId_reuniao(rs.getInt(1));
+                reuniao.setData(rs.getDate(2).toLocalDate());
+                reuniao.setTranscricao(rs.getString(3));
 
                 listaReuniao.add(reuniao);
             }
