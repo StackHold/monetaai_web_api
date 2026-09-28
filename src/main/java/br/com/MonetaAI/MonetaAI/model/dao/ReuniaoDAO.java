@@ -24,13 +24,7 @@ public class ReuniaoDAO {
         try(PreparedStatement ps = getCon().prepareStatement(sql, new String[]{"ID_REUNIAO"})) {
             ps.setDate(1, Date.valueOf(reuniao.getData()));
             ps.setString(2, reuniao.getTranscricao());
-
             if (ps.executeUpdate() > 0) {
-                try (ResultSet rs = ps.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        reuniao.setId_reuniao(rs.getInt(1));
-                    }
-                }
                 return "Reunião inserida com sucesso! ID: " + reuniao.getId_reuniao();
             }
             return "Não foi possível inserir a reunião.";
@@ -70,7 +64,6 @@ public class ReuniaoDAO {
         } catch (SQLException e) {
             System.out.println("ERRO: erro de SQL ao listar a reunião" + e.getMessage());
         }
-
         return listaReuniao;
     }
 
