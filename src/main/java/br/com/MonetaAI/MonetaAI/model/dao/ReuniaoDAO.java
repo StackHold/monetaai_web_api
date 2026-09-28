@@ -10,14 +10,11 @@ public class ReuniaoDAO {
     private Connection con;
 
     public ReuniaoDAO(Connection con){
-        setCon(con);
+        this.con = con;
     }
 
     public Connection getCon() {
         return con;
-    }
-    public void setCon(Connection con) {
-         this.con = con;
     }
 
     public String inserir(ReuniaoNovaDto reuniao){
