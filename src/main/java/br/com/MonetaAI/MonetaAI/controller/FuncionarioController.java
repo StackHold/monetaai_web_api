@@ -1,5 +1,6 @@
 package br.com.MonetaAI.MonetaAI.controller;
 
+import br.com.MonetaAI.MonetaAI.model.dto.FunciReuniRADto;
 import br.com.MonetaAI.MonetaAI.model.dto.FuncionarioDto;
 import br.com.MonetaAI.MonetaAI.service.FuncionarioService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class FuncionarioController {
     }
 
     @GetMapping("/funcionarios")
-    public List<FuncionarioDto> getTodosFuncionarios(){
+    public List<FunciReuniRADto> getTodosFuncionarios(){
         return funcionarioService.getTodosFuncionarios();
     }
 
