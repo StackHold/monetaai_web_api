@@ -49,7 +49,7 @@ public class ReuniaoDAO {
     }
 
     public ArrayList<ReuniaoDto> listarTodos(){
-        String sql = "select * from reuniao_teste order by ID_REUNIAO";
+        String sql = "select * from REUNIAO order by ID_REUNIAO";
         ArrayList<ReuniaoDto> listaReuniao = new ArrayList<>();
         try(PreparedStatement ps = getCon().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while(rs.next()){
