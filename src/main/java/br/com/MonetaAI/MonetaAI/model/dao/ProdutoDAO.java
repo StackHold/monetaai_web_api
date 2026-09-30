@@ -3,7 +3,8 @@ package br.com.MonetaAI.MonetaAI.model.dao;
 import br.com.MonetaAI.MonetaAI.model.dto.ProdutoDto;
 import br.com.MonetaAI.MonetaAI.model.dto.ProdutoNovoDto;
 import br.com.MonetaAI.MonetaAI.model.dto.ProdutoPortDto;
-import br.com.MonetaAI.MonetaAI.model.dto.ReuniaoDto;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,38 +33,38 @@ public class ProdutoDAO {
                 listaProdutos.add(produto);
             }
         }catch (SQLException e){
-            System.out.println("ERRO: erro de SQL ao listar os produtos" + e.getMessage());
+            throw new HttpServerErrorException(HttpStatusCode.valueOf(500), "ERRO: erro de SQL ao listar os produtos".concat(e.getMessage()));
         }
         return listaProdutos;
     }
 
     public ProdutoDto criar(ProdutoNovoDto produto){
         String sql = "INSERT INTO PRODUTO_TOTVS(nome, preco) values (?,?)";
+        ProdutoDto produtoResult = new ProdutoDto();
         try(PreparedStatement ps = getCon().prepareStatement(sql, new String[]{"id_produto"})){
             ps.setString(1, produto.getNome());
             ps.setFloat(2, produto.getPreco());
 
             if (ps.executeUpdate() > 0) {
                 String queryResultado = "SELECT id_produto from PRODUTO_TOTVS where nome = ?";
-                try(PreparedStatement ps2 = getCon().prepareStatement(sql)){
+                try(PreparedStatement ps2 = getCon().prepareStatement(queryResultado)){
                         ps2.setString(1, produto.getNome());
                         ResultSet rs2 = ps2.executeQuery();
                    if(rs2.next()) {
-                       ProdutoDto produtoResult = new ProdutoDto();
                        produtoResult.setId_produto(rs2.getInt(1));
                        produtoResult.setNome(produto.getNome());
                        produtoResult.setPreco(produto.getPreco());
-                       return produtoResult;
                    }
 
                 }catch (SQLException e){
-                    System.out.println("ERRO: erro de SQL ao listar os produtos" + e.getMessage());
+                    throw new HttpServerErrorException(HttpStatusCode.valueOf(500), "erro de SQL ao listar os produtos".concat(e.getMessage()));
                 }
             }
-            //TODO Caso o comando não dê certo, retorne um erro
-            return Exception;
+
         }catch (SQLException e){
-            System.out.println("ERRO: erro de SQL ao criar novo produto" + e.getMessage());
+            throw new HttpServerErrorException(HttpStatusCode.valueOf(500), "erro de SQL ao listar os produtos".concat(e.getMessage()));
         }
+
+        return produtoResult;
     }
 }
