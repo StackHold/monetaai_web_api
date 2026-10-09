@@ -1,13 +1,18 @@
 package br.com.MonetaAI.MonetaAI.model.dto;
 
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ReuniaoDto {
     private int id_reuniao;
-    private LocalDate data;
-    private String transcricao;
+    @PastOrPresent @FutureOrPresent private LocalDate data;
+    @NotNull @NotEmpty private String transcricao;
     private ClienteDto clienteDto;
 
     public ReuniaoDto() {}

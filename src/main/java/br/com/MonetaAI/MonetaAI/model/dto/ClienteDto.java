@@ -1,11 +1,16 @@
 package br.com.MonetaAI.MonetaAI.model.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.br.CNPJ;
+
 public class ClienteDto {
     private int id_cliente;
-    private String cnpj;
-    private String segmento;
-    private String nome;
-    private String email;
+    @CNPJ private String cnpj;
+    @NotNull @NotEmpty private String segmento;
+    @NotNull  private String nome;
+    @Email private String email;
 
     public ClienteDto(){}
 

@@ -1,5 +1,6 @@
 package br.com.MonetaAI.MonetaAI.model.dto;
 
+
 public class ClienteRgcDto {
     private int pontuacao;
     private String cnpj;

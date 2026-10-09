@@ -1,5 +1,10 @@
 package br.com.MonetaAI.MonetaAI.model.dto;
 
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+
 import java.time.LocalDate;
 
 public class ReuniaoNovaDto {
@@ -19,8 +24,8 @@ public class ReuniaoNovaDto {
         this.transcricao = transcricao;
     }
 
-    private LocalDate data;
-    private String transcricao;
+    @PastOrPresent @FutureOrPresent private LocalDate data;
+    @NotNull @NotEmpty private String transcricao;
 
     public ReuniaoNovaDto() {}
 

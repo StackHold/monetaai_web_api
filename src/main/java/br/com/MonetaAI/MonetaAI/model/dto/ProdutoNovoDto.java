@@ -1,5 +1,9 @@
 package br.com.MonetaAI.MonetaAI.model.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+
 public class ProdutoNovoDto {
     public String getNome() {
         return nome;
@@ -20,6 +24,6 @@ public class ProdutoNovoDto {
         this.preco = preco;
     }
 
-    private String nome;
-    private float preco;
+    @NotNull @NotEmpty private String nome;
+    @PositiveOrZero private float preco;
 }
