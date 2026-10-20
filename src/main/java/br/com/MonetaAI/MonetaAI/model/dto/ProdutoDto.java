@@ -34,5 +34,5 @@ public class ProdutoDto {
 
     private int id_produto;
     @NotNull @NotEmpty private String nome;
-    @PositiveOrZero float preco;
+    @PositiveOrZero @NotNull float preco;
 }

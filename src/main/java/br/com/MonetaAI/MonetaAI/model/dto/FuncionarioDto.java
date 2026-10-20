@@ -7,10 +7,10 @@ import org.hibernate.validator.constraints.br.CPF;
 
 public class FuncionarioDto {
     private int id_funcionario;
-    @CPF private String cpf;
+    @CPF @NotNull private String cpf;
     @NotNull @NotEmpty private String senha;
     @NotNull @NotEmpty private String nome;
-    @Email private String email;
+    @Email @NotNull private String email;
 
     public FuncionarioDto(){}
     public int getId_funcionario() {
