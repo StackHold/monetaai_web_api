@@ -4,7 +4,9 @@ import br.com.MonetaAI.MonetaAI.model.dao.ClienteDAO;
 import br.com.MonetaAI.MonetaAI.model.dao.ConnectionFactory;
 import br.com.MonetaAI.MonetaAI.model.dto.ClienteDto;
 import br.com.MonetaAI.MonetaAI.model.dto.ClienteRgcDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Connection;
 import java.util.List;
@@ -15,9 +17,13 @@ public class ClienteService {
     public String postCliente(ClienteDto clienteDto){
         Connection con = ConnectionFactory.abrirConexao();
         ClienteDAO clienteDAO = new ClienteDAO(con);
+        if (!clienteDAO.buscarPorCNPJ(clienteDto.getCnpj()).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
         String resultado = clienteDAO.inserir(clienteDto);
         ConnectionFactory.fecharConexao(con);
         return resultado;
+
     }
 
     public String putCliente(ClienteDto clienteDto){
