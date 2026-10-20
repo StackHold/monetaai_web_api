@@ -107,8 +107,9 @@ public class ClienteDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new HttpServerErrorException(HttpStatusCode.valueOf(500), "erro de SQL ao listar os produtos".concat(e.getMessage()));
+            throw new HttpServerErrorException(HttpStatusCode.valueOf(500), "erro de SQL ao listar os clientes".concat(e.getMessage()));
         }
+        return sql;
     }
 
 

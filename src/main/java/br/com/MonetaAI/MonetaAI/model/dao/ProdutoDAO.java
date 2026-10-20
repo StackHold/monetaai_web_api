@@ -67,4 +67,21 @@ public class ProdutoDAO {
 
         return produtoResult;
     }
+
+    public String buscarPorNome(String nome) {
+        String sql = "select NOME from PRODUTO_TOTVS where NOME = ?";
+        try (PreparedStatement ps = getCon().prepareStatement(sql)) {
+            ps.setString(1, nome);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String NOME = rs.getString("NOME");
+                    return NOME;
+                }
+            }
+        } catch (SQLException e) {
+            throw new HttpServerErrorException(HttpStatusCode.valueOf(500), "erro de SQL ao listar os produtos".concat(e.getMessage()));
+        }
+        return sql;
+    }
+
 }
