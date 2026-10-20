@@ -4,6 +4,8 @@ import br.com.MonetaAI.MonetaAI.model.dto.ClienteDto;
 import br.com.MonetaAI.MonetaAI.model.dto.ClienteRgcDto;
 import br.com.MonetaAI.MonetaAI.model.dto.FuncionarioDto;
 import oracle.jdbc.proxy.annotation.Pre;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -94,6 +96,20 @@ public class ClienteDAO {
         return listaCliente;
     }
 
+    public String buscarPorCNPJ(String cnpj) {
+        String sql = "select CNPJ from CLIENTE where CNPJ = ?";
+        try (PreparedStatement ps = getcon().prepareStatement(sql)) {
+            ps.setString(1, cnpj);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String CNPJ = rs.getString("CNPJ").trim();
+                    return CNPJ;
+                }
+            }
+        } catch (SQLException e) {
+            throw new HttpServerErrorException(HttpStatusCode.valueOf(500), "erro de SQL ao listar os produtos".concat(e.getMessage()));
+        }
+    }
 
 
 }

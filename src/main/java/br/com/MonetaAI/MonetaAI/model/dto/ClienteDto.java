@@ -7,10 +7,10 @@ import org.hibernate.validator.constraints.br.CNPJ;
 
 public class ClienteDto {
     private int id_cliente;
-    @CNPJ private String cnpj;
+    @CNPJ @NotNull private String cnpj;
     @NotNull @NotEmpty private String segmento;
     @NotNull  private String nome;
-    @Email private String email;
+    @Email @NotNull private String email;
 
     public ClienteDto(){}
 
