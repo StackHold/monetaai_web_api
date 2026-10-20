@@ -81,7 +81,7 @@ public class ProdutoDAO {
         } catch (SQLException e) {
             throw new HttpServerErrorException(HttpStatusCode.valueOf(500), "erro de SQL ao listar os produtos".concat(e.getMessage()));
         }
-        return sql;
+        throw new HttpServerErrorException(HttpStatusCode.valueOf(500), "erro de SQL ao listar os produtos");
     }
 
 }
